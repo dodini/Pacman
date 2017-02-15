@@ -56,10 +56,15 @@ public class init extends JFrame implements KeyListener {
     private int[] yGhosts;
     private int[] prevCaseGhosts;
     private int[] dirGhosts;
+    private int fruitSpawnTime = 0;
+    private Boolean fruitSpawned = false;
+    private int xFruit = 11;
+    private int yFruit = 18;
+    private double score;
     private Boolean pause;
     private Boolean ended = false;
     private Random random = new Random();
-
+    
 
     public init() {
         // Default frame settings
@@ -107,6 +112,7 @@ public class init extends JFrame implements KeyListener {
         display.setGum(gum);
         display.setPacmanCoord(xPacman, yPacman);
         display.setGhostsCoord(xGhosts, yGhosts);
+        display.setFruitCoord(xFruit, yFruit);
         setContentPane(display);
         pause = true;
         // Adding setting up the keyboard management.
@@ -134,6 +140,7 @@ public class init extends JFrame implements KeyListener {
                 e.printStackTrace();
             }
         }
+        System.out.println(double score);
         System.exit(0);
     }
 
@@ -143,6 +150,7 @@ public class init extends JFrame implements KeyListener {
                 System.out.println("DEAD !");
                 xPacman = 1;
                 yPacman = 1;
+                score = score-10;
             }
         }
     }
@@ -209,17 +217,25 @@ public class init extends JFrame implements KeyListener {
         if(countGum() == 0) {
             ended = true;
         }
+        fruitSpawnTime = fruitSpawnTime+1
         try {
             Thread.sleep(300);
         } catch(InterruptedException e) {
             e.printStackTrace();
         }
     }
+    
+    public void fruitSpawn () {
+    	if (fruitSpawnTime == 50) {
+    			fruitSpawned = true;
+    			fruitSpawnTime = 0; 			
+    }
 
     public void updateDisplay() {
         display.setGum(gum);
         display.setPacmanCoord(xPacman, yPacman);
         display.setGhostsCoord(xGhosts, yGhosts);
+        display.setFruitCoord(xFruit, yFruit);
         display.repaint();
     }
 
@@ -237,7 +253,16 @@ public class init extends JFrame implements KeyListener {
     public void tryToEatGum() {
         if(gum[yPacman][xPacman] == 1) {
             gum[yPacman][xPacman] = 0;
+            score++;
         }
+    }
+    
+    public void tryToEatFruit() {
+    	if(fruit[yPacman][xPacman] == 1) {
+    		fruit[yPacman][xPacman] = 0;
+    		fruitSpawned = false;
+    		score = score+5;
+    	}
     }
 
     public void movePacman() {
