@@ -61,6 +61,9 @@ public class Display extends JPanel {
                         g.fillOval(getWidth()/(xSize+2)*(x+1), getHeight()/(ySize+2)*(y+1), getWidth()/(xSize+2), getHeight()/(ySize+2));
                     }
                 }
+                if(fruitSpawned == true) {
+                	g.setColor(Color.GREEN);
+                	g.fillOval(getWidth()/(xSize+2)*(x+1), getHeight()/(ySize+2)*(y+1), getWidth()/(xSize+2), getHeight()/(ySize+2);
             }
         }
     }
